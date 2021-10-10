@@ -195,3 +195,67 @@ void saveall(int e, const pipe& pipe, const station& station)
 		break;
 	}
  }
+
+pipe browsepipe()
+{
+	pipe pipe;
+	ifstream fin;
+	fin.open("pipe.txt", ios::in);
+	if (fin.is_open())
+	{
+		fin >> pipe.dlina ;
+		fin >> pipe.diametr;
+		fin >> pipe.v_remonte;
+		fin.close();
+		return pipe;
+	}
+};
+pipe browsestation()
+{
+	station station;
+	ifstream fin;
+	fin.open("station.txt", ios::in);
+	if (fin.is_open())
+	{
+		fin >> station.name;
+		fin >> station.tseh;
+		fin >> station.tseh_v_rabote;
+		fin >> station.eff;
+		fin.close();
+		return station;
+	}
+};
+
+void browse(pipe& pipe, station& station)
+{
+	ifstream fin;
+	fin.open("all.txt", ios::in);
+	if (fin.is_open())
+	{
+		fin >> pipe.dlina;
+		fin >> pipe.diametr;
+		fin >> pipe.v_remonte;
+		fin >> station.name;
+		fin >> station.tseh;
+		fin >> station.tseh_v_rabote;
+		fin >> station.eff;
+	}
+	fin.close();
+};
+
+void browseall(pipe& pipe, station& station)
+{
+	switch (proverka(1, 3, "\n Vyberite 1-truba, 2-stantsiya, 3-vse vmeste: "))
+	{
+	case 1:
+		lookpipe(browsepipe());
+		break;
+	case 2:
+		lookstation(browsestation());
+		break;
+	case 3:
+		browse(pipe, station);
+		break;
+	}
+}
+
