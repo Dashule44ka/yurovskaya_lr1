@@ -83,6 +83,7 @@ void lookstation(cont ctation& station);
 	cout << "name:" << station.name << endl;
 	cout << "tseh:" << station.tseh << endl;
 	cout << "tsehi v rabote:" << station.tseh_v_rabote << endl;
+	cout << "effektivnost:" << station.eff << endl;
 }
 
 void lookall(int q, const pipe& pipe, const station& station)
@@ -132,3 +133,65 @@ void editstation(station& station)
 	} 
 	while (cin.fail() || isNumber(int(choise)));
 };
+
+void savepipe(const pipe& pipe)
+{
+	ofstream fout;
+	fout.open("pipe.txt", ios::out);
+	if (fout.is_open())
+	{
+		cout << "ID:" << pipe.id << endl;
+		cout << "dlina:" << pipe.dlina << endl;
+		cout << "diametr:" << pipe.diametr << endl;
+		cout << "v remonte:" << pipe.v_remonte << endl;
+		fout.close();
+	}
+}
+void savestation(const station& station)
+{
+	ofstream fout;
+	fout.open("station.txt", ios::out);
+	if (fout.is_open())
+	{
+		cout << "ID:" << station.id << endl;
+		cout << "name:" << station.name << endl;
+		cout << "tseh:" << station.tseh << endl;
+		cout << "tsehi v rabote:" << station.tseh_v_rabote << endl;
+		cout << "effektivnost:" << station.eff << end
+		fout.close();
+	}
+}
+
+void save(const pipe& pipe, const station& station)
+{
+	ofstream fout;
+	fout.open("all.txt", ios::out);
+	if (fout.is_open())
+	{
+		cout << "ID:" << pipe.id << endl;
+		cout << "dlina:" << pipe.dlina << endl;
+		cout << "diametr:" << pipe.diametr << endl;
+		cout << "v remonte:" << pipe.v_remonte << endl;
+		cout << "ID:" << station.id << endl;
+		cout << "name:" << station.name << endl;
+		cout << "tseh:" << station.tseh << endl;
+		cout << "tsehi v rabote:" << station.tseh_v_rabote << endl;
+		cout << "effektivnost:" << station.eff << endl;
+		fout.close();
+	}
+}
+void saveall(int e, const pipe& pipe, const station& station)
+{
+	switch (e)
+	{
+	case 1:
+		savepipe(pipe);
+		break;
+	case 2:
+		savestation(station);
+		break;
+	case 3:
+		save(pipe, station);
+		break;
+	}
+ }
