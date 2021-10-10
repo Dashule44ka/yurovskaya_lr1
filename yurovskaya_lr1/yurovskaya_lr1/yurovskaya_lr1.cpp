@@ -259,3 +259,101 @@ void browseall(pipe& pipe, station& station)
 	}
 }
 
+void printmenu()
+{
+	cout << 1.truba << endl;
+	cout << 2.stantsiya << endl;
+	cout << 3.look << endl;
+	cout << 4.redaktirovat truby(edit) << endl;
+	cout << 5.redaktirovat stantsiyu(edit)<< endl;
+	cout << 6.sohranit(save) << endl;
+	cout << 7.zagruzit(browse) << endl;
+	cout << 0.viyti(exit) << endl;
+}
+
+int main()
+{
+	pipe pipe;
+	station station;
+	bool is_pipe = 0;
+	bool is_station = 0;
+	while (1)
+	{
+		printmenu();
+		switch (proverka(0,7,"menu:"))
+		{
+		case 1:
+		{
+			pipe = createpipe();
+			is_pipe == true;
+			break;
+		}
+		case 2:
+		{
+			station = createstation();
+			is_station == true;
+			break;
+		}
+		case 3:
+			if (is_pipe == true && is_station == true)
+			{
+				{
+					cout << "vyberite variant 1-pipe, 2-station";
+					int q = 0;
+					cin >> q;
+					lookall(q, pipe, station);
+					break;
+				}
+			}
+			else
+			{
+				cout << "vvedite dannye dlya 1 and 2";
+			}
+		case 4:
+		{
+			if (is_pipe == true)
+			{
+				editpipe(pipe);
+				break;
+			}
+		}
+		case 5:
+		{
+			if (is_station == true)
+			{
+				editstation(station);
+				break;
+			}
+		}
+		case 6:
+		{
+			if (is_pipe--true && is_station == true)
+			{
+				cout << "Vyberite: 1-pipe, 2-station, 3-all";
+				int e = 0;
+				cin >> e;
+				saveall(e, pipe, station);
+				break;
+			}
+		}
+		case 7:
+		{
+			if (is_pipe == true && is_station == true)
+			{
+				browseall(pipe, station)
+				break;
+			}
+		}
+		case 0:
+		{
+			return 0;
+		}
+		default:
+		{
+			cout << "oshibka!!!";
+		}
+		}
+	}
+	return 0;
+}
+
