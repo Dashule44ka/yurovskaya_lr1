@@ -63,7 +63,7 @@ Station createStation()
 	cout << "Vvedite nazvanie station:" << endl;
 	getline(cin, s.name);
 	cin >> s.name;
-	s.tseh = proverka(1, 1000, "\n'Vvedite kolvo tsehov:");
+	s.tseh = proverka(1, 10000, "\n'Vvedite kolvo tsehov:");
 	s.tseh_v_rabote = proverka(1, s.tseh, "\n'Vvedite kolvo tsehov v rabote:");
 	s.eff = proverka(1, 100, "\n'Kakova effektivnost:");
 	return s;
@@ -134,67 +134,30 @@ void editStation(Station& s)
 	while (cin.fail() || isNumber(int(choise)));
 };
 
-void savepipe(const pipe& p)
+void savepipe(const pipe& p, ofstream& fout)
 {
-	ofstream fout;
-	fout.open("pipe.txt", ios::out);
 	if (fout.is_open())
 	{
 		cout << "ID:" << p.id << endl;
 		cout << "dlina:" << p.dlina << endl;
 		cout << "diametr:" << p.diametr << endl;
 		cout << "v remonte:" << p.v_remonte << endl;
-		fout.close();
-	}
-}
-void saveStation(const Station& s)
-{
-	ofstream fout;
-	fout.open("station.txt", ios::out);
-	if (fout.is_open())
-	{
-		cout << "ID:" << s.id << endl;
-		cout << "name:" << s.name << endl;
-		cout << "tseh:" << s.tseh << endl;
-		cout << "tsehi v rabote:" << s.tseh_v_rabote << endl;
-		cout << "effektivnost:" << s.eff << endl;
-		fout.close();
 	}
 }
 
-void save(const pipe& p, const Station& s)
+
+
+void saveStation(const Station& s, ofstream&fout)
 {
-	ofstream fout;
-	fout.open("all.txt", ios::out);
 	if (fout.is_open())
 	{
-		cout << "ID:" << p.id << endl;
-		cout << "dlina:" << p.dlina << endl;
-		cout << "diametr:" << p.diametr << endl;
-		cout << "v remonte:" << p.v_remonte << endl;
 		cout << "ID:" << s.id << endl;
 		cout << "name:" << s.name << endl;
 		cout << "tseh:" << s.tseh << endl;
 		cout << "tsehi v rabote:" << s.tseh_v_rabote << endl;
 		cout << "effektivnost:" << s.eff << endl;
-		fout.close();
 	}
 }
-void saveall(int e, const pipe& pi, const Station& st)
-{
-	switch (e)
-	{
-	case 1:
-		savepipe(pi);
-		break;
-	case 2:
-		saveStation(st);
-		break;
-	case 3:
-		save(pi, st);
-		break;
-	}
- }
 
 pipe browsepipe()
 {
@@ -273,10 +236,11 @@ void printmenu()
 
 int main()
 {
+	
 	pipe pi;
 	Station st;
-	bool is_pipe = 0;
-	bool is_station = 0;
+	bool is_pipe = 1;
+	bool is_station = 1;
 	while (1)
 	{
 		printmenu();
@@ -327,12 +291,14 @@ int main()
 		}
 		case 6:
 		{
-			if (is_pipe==true && is_station == true)
+			//if (is_pipe==true && is_station == true)
+
 			{
-				cout << "Vyberite: 1-pipe, 2-station, 3-all";
-				int e = 0;
-				cin >> e;
-				saveall(e, pi, st);
+				ofstream fout;
+				fout.open("all.txt", ios::out);
+				savepipe(pi, fout);
+				saveStation(st, fout);
+				fout.close();
 				break;
 			}
 		}
