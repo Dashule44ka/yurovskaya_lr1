@@ -5,17 +5,17 @@
 using namespace std;
 
 template <typename T>
-T proverka(T min, T max < string n)
+T proverka(T min, T max , string n)
 {
 	T x;
 	cout << n;
-	while ((cin > n).fail() || n > max || n < min)
+	while ((cin >> x).fail() || x > max || x < min)
 	{
 		cin.clear();
 		cin.ignore(10000, '\n');
 		cout << n;
 	}
-	return n;
+	return x;
 }
 
 struct pipe
@@ -37,7 +37,7 @@ struct Station
 	bool is_station;
 };
 
-bool isNuumber(char Symbol)
+bool isNumber(char Symbol)
 {
 	if (Symbol >= '0' && Symbol <= '9')
 		return true;
@@ -55,21 +55,21 @@ pipe createpipe()
 	return p;
 };
 
-pipe createStation()
+Station createStation()
 {
 	Station s;
 	s.is_station == true;
 	s.id = 1;
 	cout << "Vvedite nazvanie station:" << endl;
-	getline(cin, station.name);
+	getline(cin, s.name);
 	cin >> s.name;
 	s.tseh = proverka(1, 1000, "\n'Vvedite kolvo tsehov:");
-	s.tseh_v_rabote = proverka(1, station.tseh, "\n'Vvedite kolvo tsehov v rabote:");
+	s.tseh_v_rabote = proverka(1, s.tseh, "\n'Vvedite kolvo tsehov v rabote:");
 	s.eff = proverka(1, 100, "\n'Kakova effektivnost:");
 	return s;
 };
 
-void lookpipe(const pipe& p);
+void viewpipe(const pipe& p)
 {
 	cout << "ID:" << p.id << endl;
 	cout << "dlina:" << p.dlina << endl;
@@ -77,7 +77,7 @@ void lookpipe(const pipe& p);
 	cout << "v remonte:" << p.v_remonte << endl;
 }
 
-void lookStation(cont Station& s);
+void viewStation(const Station& s)
 {
 	cout << "ID:" << s.id << endl;
 	cout << "name:" << s.name << endl;
@@ -86,16 +86,16 @@ void lookStation(cont Station& s);
 	cout << "effektivnost:" << s.eff << endl;
 }
 
-void lookall(int q, const pipe& pi, const Station& st)
+void viewall(int q, const pipe& pi, const Station& st)
 {
 	switch (q)
 	{
 	case 1:
-		lookpipe(pi);
+		viewpipe(pi);
 		break;
 	case 2:
-		lookStation(st);
-		break
+		viewStation(st);
+		break;
 	}
 }
 
@@ -108,7 +108,7 @@ void editpipe(pipe& p)
 	}
 	else
 	{
-		p.v_remonte_remonte = 1;
+		p.v_remonte = 1;
 		cout << "\n truba v remonte!!!";
 	}
 };
@@ -147,7 +147,7 @@ void savepipe(const pipe& p)
 		fout.close();
 	}
 }
-void saveStation(const station& s)
+void saveStation(const Station& s)
 {
 	ofstream fout;
 	fout.open("station.txt", ios::out);
@@ -157,7 +157,7 @@ void saveStation(const station& s)
 		cout << "name:" << s.name << endl;
 		cout << "tseh:" << s.tseh << endl;
 		cout << "tsehi v rabote:" << s.tseh_v_rabote << endl;
-		cout << "effektivnost:" << s.eff << end
+		cout << "effektivnost:" << s.eff << endl;
 		fout.close();
 	}
 }
@@ -188,7 +188,7 @@ void saveall(int e, const pipe& pi, const Station& st)
 		savepipe(pi);
 		break;
 	case 2:
-		savestation(st);
+		saveStation(st);
 		break;
 	case 3:
 		save(pi, st);
@@ -198,7 +198,7 @@ void saveall(int e, const pipe& pi, const Station& st)
 
 pipe browsepipe()
 {
-	pipe pi;
+	pipe p;
 	ifstream fin;
 	fin.open("pipe.txt", ios::in);
 	if (fin.is_open())
@@ -210,7 +210,7 @@ pipe browsepipe()
 		return p;
 	}
 };
-pipe browseStation()
+Station browseStation()
 {
 	Station s;
 	ifstream fin;
@@ -248,10 +248,10 @@ void browseall(pipe& p, Station& s)
 	switch (proverka(1, 3, "\n Vyberite 1-truba, 2-stantsiya, 3-vse vmeste: "))
 	{
 	case 1:
-		lookpipe(browsepipe());
+		viewpipe(browsepipe());
 		break;
 	case 2:
-		lookStation(browseStation());
+		viewStation(browseStation());
 		break;
 	case 3:
 		browse(p, s);
@@ -261,14 +261,14 @@ void browseall(pipe& p, Station& s)
 
 void printmenu()
 {
-	cout << 1.truba << endl;
-	cout << 2.stantsiya << endl;
-	cout << 3.look << endl;
-	cout << 4.redaktirovat truby(edit) << endl;
-	cout << 5.redaktirovat stantsiyu(edit)<< endl;
-	cout << 6.sohranit(save) << endl;
-	cout << 7.zagruzit(browse) << endl;
-	cout << 0.viyti(exit) << endl;
+	cout << "1.truba" << endl;
+	cout << "2 stantsiya" << endl;
+	cout << "3.look" << endl;
+	cout << "4.redaktirovat truby(edit)" << endl;
+	cout << "5.redaktirovat stantsiyu(edit)"<< endl;
+	cout << "6.sohranit(save)" << endl;
+	cout << "7.zagruzit(browse)" << endl;
+	cout << "0.viyti(exit)"<< endl;
 }
 
 int main()
@@ -301,7 +301,7 @@ int main()
 					cout << "vyberite variant 1-pipe, 2-station";
 					int q = 0;
 					cin >> q;
-					lookall(q, pi, st);
+					viewall(q, pi, st);
 					break;
 				}
 			}
@@ -327,7 +327,7 @@ int main()
 		}
 		case 6:
 		{
-			if (is_pipe--true && is_station == true)
+			if (is_pipe==true && is_station == true)
 			{
 				cout << "Vyberite: 1-pipe, 2-station, 3-all";
 				int e = 0;
@@ -340,7 +340,7 @@ int main()
 		{
 			if (is_pipe == true && is_station == true)
 			{
-				browseall(pi, st)
+				browseall(pi, st);
 				break;
 			}
 		}
