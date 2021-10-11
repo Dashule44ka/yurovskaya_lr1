@@ -138,46 +138,39 @@ void savepipe(const pipe& p, ofstream& fout)
 {
 	if (fout.is_open())
 	{
-		cout << "ID:" << p.id << endl;
-		cout << "dlina:" << p.dlina << endl;
-		cout << "diametr:" << p.diametr << endl;
-		cout << "v remonte:" << p.v_remonte << endl;
+		//fout << p.id << endl;
+		fout << p.dlina << endl;
+		fout << p.diametr << endl;
+		fout << p.v_remonte << endl;
 	}
 }
-
-
 
 void saveStation(const Station& s, ofstream&fout)
 {
 	if (fout.is_open())
 	{
-		cout << "ID:" << s.id << endl;
-		cout << "name:" << s.name << endl;
-		cout << "tseh:" << s.tseh << endl;
-		cout << "tsehi v rabote:" << s.tseh_v_rabote << endl;
-		cout << "effektivnost:" << s.eff << endl;
+		//fout << s.id << endl;
+		fout << s.name << endl;
+		fout << s.tseh << endl;
+		fout << s.tseh_v_rabote << endl;
+		fout << s.eff << endl;
 	}
 }
 
-pipe browsepipe()
+pipe browsepipe(pipe& p, ifstream& fin)
 {
-	pipe p;
-	ifstream fin;
-	fin.open("pipe.txt", ios::in);
+	
 	if (fin.is_open())
 	{
 		fin >> p.dlina ;
 		fin >> p.diametr;
 		fin >> p.v_remonte;
-		fin.close();
+		
 		return p;
 	}
 };
-Station browseStation()
+Station browseStation(Station& s, ifstream& fin)
 {
-	Station s;
-	ifstream fin;
-	fin.open("station.txt", ios::in);
 	if (fin.is_open())
 	{
 		fin >> s.name;
@@ -189,38 +182,7 @@ Station browseStation()
 	}
 };
 
-void browse(pipe& p, Station& s)
-{
-	ifstream fin;
-	fin.open("all.txt", ios::in);
-	if (fin.is_open())
-	{
-		fin >> p.dlina;
-		fin >> p.diametr;
-		fin >> p.v_remonte;
-		fin >> s.name;
-		fin >> s.tseh;
-		fin >> s.tseh_v_rabote;
-		fin >> s.eff;
-	}
-	fin.close();
-};
 
-void browseall(pipe& p, Station& s)
-{
-	switch (proverka(1, 3, "\n Vyberite 1-truba, 2-stantsiya, 3-vse vmeste: "))
-	{
-	case 1:
-		viewpipe(browsepipe());
-		break;
-	case 2:
-		viewStation(browseStation());
-		break;
-	case 3:
-		browse(p, s);
-		break;
-	}
-}
 
 void printmenu()
 {
@@ -291,7 +253,7 @@ int main()
 		}
 		case 6:
 		{
-			//if (is_pipe==true && is_station == true)
+			if (is_pipe==true && is_station == true)
 
 			{
 				ofstream fout;
@@ -306,7 +268,11 @@ int main()
 		{
 			if (is_pipe == true && is_station == true)
 			{
-				browseall(pi, st);
+				ifstream fin;
+				fin.open("all.txt", ios::in);
+				browsepipe(pi, fin);
+				browseStation(st, fin);
+				fin.close();
 				break;
 			}
 		}
